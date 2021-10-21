@@ -1,7 +1,5 @@
 #include <Arduino.h>
 #include "USBHost_t36.h"
-#include "c128d_usb_keys.hpp"
-#include "usb_key_buffer.hpp"
 
 
 USBHost usb_host;
@@ -14,15 +12,15 @@ void on_raw_press(uint8_t keycode) {
 	Serial.print("raw key press: 0x");
 	Serial.println((int)keycode, HEX);
 
-	if (keycode == c128d_caps_lock.usb_key_code()) {
-		c128d_caps_lock.toggle_on_state();
-	}
-	else if (keycode == c128d_40_80.usb_key_code()) {
-		c128d_40_80.toggle_on_state();
-	}
-	else {
-		key_buffer.add(keycode);
-	}
+	// if (keycode == c128d_caps_lock.usb_key_code()) {
+	// 	c128d_caps_lock.toggle_on_state();
+	// }
+	// else if (keycode == c128d_40_80.usb_key_code()) {
+	// 	c128d_40_80.toggle_on_state();
+	// }
+	// else {
+	// 	key_buffer.add(keycode);
+	// }
 }
 
 
@@ -30,9 +28,9 @@ void on_raw_release(uint8_t keycode) {
 	Serial.print("raw key release: 0x");
 	Serial.println((int)keycode, HEX);
 
-	if ((keycode != c128d_caps_lock.usb_key_code()) && (keycode != c128d_40_80.usb_key_code())) {
-		key_buffer.remove(keycode);
-	}
+	// if ((keycode != c128d_caps_lock.usb_key_code()) && (keycode != c128d_40_80.usb_key_code())) {
+	// 	key_buffer.remove(keycode);
+	// }
 }
 
 
@@ -40,10 +38,6 @@ void setup() {
 	// Setup debugging output
 	while (!Serial) ; 
 	Serial.begin(115200);
-
-	// Initialize data structures
-	initialize_lock_key_state();
-	initialize_keyboard_output_pins();
 
 	// Setup USB Host and listen to the first keyboard found
 	usb_host.begin();
@@ -57,6 +51,5 @@ void loop() {
 	usb_host.Task();
 
 	// Once the USB keyboard buffer has been updated, derive output state from it
-	update_output_pins(keyboard);
 }
 
