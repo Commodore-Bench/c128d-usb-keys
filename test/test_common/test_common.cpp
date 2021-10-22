@@ -11,6 +11,7 @@ void setup() {
     delay(2000);
     run_usb_keyboard_buffer_tests();
     run_lock_key_tests();
+    run_usb_c128d_tests();
 }
 
 void loop() {
@@ -26,6 +27,7 @@ void loop() {
 int main(int argc, char **argv) {
     run_usb_keyboard_buffer_tests();
     run_lock_key_tests();
+    run_usb_c128d_tests();
     return 0;
 }
 
