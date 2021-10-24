@@ -50,16 +50,16 @@ PinsState* USB_C128D::get_output_pins(bool is_usb_capslock, bool is_usb_numlock)
         _set_output_key(usb_key_mapping[c128_4080_lock_key.usb_key_code()]);
     }
 
+    // If the USB capslock is on, set left-shift 
+    // (emulates shift-lock on C128D keyboard)
+    if (is_usb_capslock) {
+        _set_output_key(usb_key_mapping[USB_KEY_LSHIFT]);
+    }
+
     // Set the output pins state for every key in the buffer
     usb_key_buffer.for_each([is_usb_capslock, is_usb_numlock](uint8_t usb_key_code) {
         // If this key is within the accepted range
         if (usb_key_code <= MAX_USB_KEY_CODE) {
-            // If the USB capslock is on, set left-shift 
-            // (emulates shift-lock on C128D keyboard)
-            if (is_usb_capslock) {
-                _set_output_key(usb_key_mapping[USB_KEY_LSHIFT]);
-            }
-
             // If up-arrow or left-arrow is pressed, set right-shift
             // (emulates C128D cursor directions, the cursor keys are sent below)
             if ((usb_key_code == USB_KEY_LEFT) || (usb_key_code == USB_KEY_UP)) {
